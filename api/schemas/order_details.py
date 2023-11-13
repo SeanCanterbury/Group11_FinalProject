@@ -22,6 +22,7 @@ class OrderDetail(OrderDetailBase):
     id: int
     order_id: int
     sandwich: Sandwich = None
+    total_price: float = None
 
     class ConfigDict:
         from_attributes = True

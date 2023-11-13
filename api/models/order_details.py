@@ -10,6 +10,7 @@ class OrderDetail(Base):
     order_id = Column(Integer, ForeignKey("orders.id"))
     sandwich_id = Column(Integer, ForeignKey("sandwiches.id"))
     amount = Column(Integer, index=True, nullable=False)
+    total_price = Column(DECIMAL(4, 2), nullable=False, server_default='0.0'
 
     sandwich = relationship("Sandwich", back_populates="order_details")
     order = relationship("Order", back_populates="order_details")
