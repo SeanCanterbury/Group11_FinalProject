@@ -2,7 +2,6 @@ from sqlalchemy import CheckConstraint, Column, ForeignKey, Integer, String, DEC
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
-from .ratings import Ratings
 
 
 class RatingBase(Base):
