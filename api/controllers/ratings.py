@@ -10,6 +10,10 @@ def create(db: Session, request):
         description=request.description,
         customer_name=request.customer_name
     )
+    if new_item.rating < 1:
+        new_item.rating = 1
+    if new_item.rating > 10:
+        new_item.rating = 10
 
     try:
         db.add(new_item)
@@ -47,6 +51,10 @@ def update(db: Session, item_id, request):
         if not item.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         update_data = request.dict(exclude_unset=True)
+        if request.rating < 1:
+            update_data['rating'] = 1
+        if request.rating > 10:
+            update_data['rating'] = 10
         item.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
