@@ -4,7 +4,7 @@ from datetime import datetime
 from ..dependencies.database import Base
 
 
-class RatingBase(Base):
+class Rating(Base):
     __tablename__ = "ratings"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -15,4 +15,4 @@ class RatingBase(Base):
     description = Column(String(300))
     
 
-    order = relationship("Order", back_populates="order")
+    #order = relationship("Order", back_populates="order")

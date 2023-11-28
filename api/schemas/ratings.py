@@ -6,7 +6,7 @@ from .orders import OrderBase
 
 
 class RatingBase(BaseModel):
-    customer_name: str(50) = None
+    customer_name: str
     rating: int
     description: Optional[str] = None
     
@@ -14,6 +14,8 @@ class RatingBase(BaseModel):
 
 class RatingCreate(RatingBase):
     pass
+    
+
 
 
 class RatingUpdate(BaseModel):
@@ -27,7 +29,7 @@ class RatingUpdate(BaseModel):
 class Rating(RatingBase):
     id: int
     rating_date: Optional[datetime] = None
-    order: Optional[OrderBase] = None
+    #order: list[OrderBase] = None
 
     class ConfigDict:
         from_attributes = True
