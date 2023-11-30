@@ -1,4 +1,4 @@
-from . import orders, order_details, ratings, resources
+from . import orders, order_details, ratings, resources, promos
 
 
 
@@ -8,3 +8,4 @@ def load_routes(app):
     #print("next is ratings")
     app.include_router(ratings.router)
     app.include_router(resources.router)
+    app.include_router(promos.router)
