@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=schema.Order)
+@router.post("/", response_model=schema.Promo)
 def create(request: schema.PromoCreate, db: Session = Depends(get_db)):
     return controller.create(db=db, request=request)
 
