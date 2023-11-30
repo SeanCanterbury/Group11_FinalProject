@@ -11,3 +11,4 @@ class Promo(Base):
     promo_code = Column(String(20), unique=True, nullable=True)
     discount = Column(DECIMAL(4, 2), nullable=False, server_default='0.0')
 
+
