@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import orders as model
@@ -29,6 +30,16 @@ def read_all(db: Session):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
+
+def read_date(db: Session, date):
+    try:
+        result = db.query(model.Order).filter(func.date(model.Order.order_date) == date)
+        if not result:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No orders on that date!")
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return result
 
 def read_one(db: Session, item_id):
     try:
