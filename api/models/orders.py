@@ -12,6 +12,11 @@ class Order(Base):
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
     description = Column(String(300))
     order_complete = Column(Boolean, nullable=False, server_default='0')
+    card_number = Column(String(19), nullable=False)
+    cvv = Column(String(3), nullable=False)
+    card_name = Column(String(300), nullable=False)
+    exp_month = Column(String(2), nullable=False)
+    exp_year = Column(String(2), nullable=False)
 
 
     order_details = relationship("OrderDetail", back_populates="order")
