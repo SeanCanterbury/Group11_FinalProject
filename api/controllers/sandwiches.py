@@ -21,7 +21,9 @@ def create(db: Session, request):
     new_item = model.Sandwich(
         sandwich_name=request.sandwich_name,
         price=request.price,
+        calories=request.calories,
         resource_id=request.resource_id
+
     )
 
     try:
