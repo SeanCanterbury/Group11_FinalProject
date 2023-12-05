@@ -80,6 +80,16 @@ def read_date(db: Session, date):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
+
+def get_total_cost(db: Session, date):
+    total_cost = db.query(func.sum(odModel.OrderDetail.total_price)).\
+        join(model.Order, model.Order.id == odModel.OrderDetail.order_id).\
+        filter(func.date(model.Order.order_date)).\
+        scalar()
+    print(total_cost)
+    return {"total_cost": total_cost or 0.0}
+
+
 def read_one(db: Session, item_id):
     try:
         item = db.query(model.Order).filter(model.Order.id == item_id).first()

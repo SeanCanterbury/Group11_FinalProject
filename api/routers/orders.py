@@ -26,6 +26,10 @@ def read_all(db: Session = Depends(get_db)):
 def read_date(date: datetime.date, db: Session = Depends(get_db)):
     return controller.read_date(db, date=date)
 
+@router.get("/total_cost/{YYYY-MM-DD}", response_model=schema.TotalCost)
+def get_total_cost(date: datetime.date, db: Session = Depends(get_db)):
+    return controller.get_total_cost(db, date=date)
+
 
 @router.get("/{item_id}", response_model=schema.Order)
 def read_one(item_id: int, db: Session = Depends(get_db)):

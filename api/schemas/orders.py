@@ -18,6 +18,10 @@ class OrderBase(BaseModel):
     amount: int
 
 
+class TotalCost(BaseModel):
+    total_cost: float
+
+
 class OrderCreate(OrderBase):
     pass
 
