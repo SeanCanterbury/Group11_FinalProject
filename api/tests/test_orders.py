@@ -29,7 +29,8 @@ def test_create_order(db_session):
         "exp_month": "00",
         "exp_year": "00",
         "sandwich_id": 1,
-        "amount": 2
+        "amount": 2,
+        "promo_code": "string"
     }
 
     resource_data = {
@@ -68,6 +69,7 @@ def test_create_order(db_session):
     assert created_order.exp_year == "00"
     assert created_order.sandwich_id == 1
     assert created_order.amount == 2
+    assert created_order.promo_code == "string"
     
     
 

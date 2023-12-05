@@ -19,6 +19,8 @@ class Order(Base):
     exp_year = Column(String(2), nullable=False)
     sandwich_id = Column(Integer, nullable=False)
     amount = Column(Integer, index=True, nullable=False)
+    promo_code = Column(String(100))
 
 
     order_details = relationship("OrderDetail", back_populates="order")
+    #promos = relationship("Promo", back_populates="order")
