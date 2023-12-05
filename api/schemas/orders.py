@@ -16,6 +16,7 @@ class OrderBase(BaseModel):
     exp_year: str = "00"
     sandwich_id: int
     amount: int
+    promo_code: str
 
 
 class TotalCost(BaseModel):

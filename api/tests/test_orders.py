@@ -41,7 +41,8 @@ def test_create_order(db_session):
         "sandwich_name": "grilled cheese",
         "price": 10,  # Set a valid price for the sandwich
         "calories": 100,
-        "resource_id": 1
+        "resource_id": 1,
+        "amount": 10
     }
 
     resource_object = resModel.Resource(**resource_data)

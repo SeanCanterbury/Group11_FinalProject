@@ -4,6 +4,7 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models import orders as model
 from ..models import order_details as odModel
 from ..models import sandwiches as sandModel
+from ..models import promos as promoModel
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -17,7 +18,8 @@ def create(db: Session, request):
         exp_month=request.exp_month,
         exp_year=request.exp_year,
         sandwich_id=request.sandwich_id,
-        amount=request.amount
+        amount=request.amount,
+        promo_code=request.promo_code
         )
 
     try:
@@ -30,12 +32,18 @@ def create(db: Session, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
             
     item = db.query(model.Order).filter().first()
+    promo = db.query(promoModel.Promo).filter(promoModel.Promo.promo_code == request.promo_code).first()
+
+    discount = 0
+
+    if promo != None:
+        discount = promo.discount
 
     new_order_detail = odModel.OrderDetail(
         order_id=item.id,
         sandwich_id=new_item.sandwich_id,
         amount=new_item.amount,
-        total_price = new_item.amount * (db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().price)
+        total_price = new_item.amount * (db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().price) - discount
         # Add other fields here
     )
     db.add(new_item)

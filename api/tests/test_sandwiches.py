@@ -26,7 +26,8 @@ def test_create_sandwich(db_session):
         "sandwich_name": "grilled cheese",
         "price": 10,  # Set a valid price for the sandwich
         "calories": 100,
-        "resource_id": 1
+        "resource_id": 1,
+        "amount": 10
     }
 
     resource_object = resModel.Resource(**resource_data)
@@ -45,4 +46,5 @@ def test_create_sandwich(db_session):
     assert created_sandwich.price == sandwich_object.price
     assert created_sandwich.calories == sandwich_object.calories
     assert created_sandwich.resource_id == sandwich_object.resource_id
+    assert created_sandwich.amount == sandwich_object.amount
     
