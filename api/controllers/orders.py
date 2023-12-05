@@ -38,6 +38,11 @@ def create(db: Session, request):
         total_price = new_item.amount * (db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().price)
         # Add other fields here
     )
+    db.add(new_item)
+    db.add(new_order_detail)
+    db.commit()
+    db.refresh(new_item)
+    db.refresh(new_order_detail)
 
     numSandwiches = db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().amount
     
@@ -48,10 +53,10 @@ def create(db: Session, request):
     sandwich.amount -= new_order_detail.amount
     db.commit()
     try:
+        print(new_order_detail)
         db.add(new_order_detail)
         db.commit()
         db.refresh(new_order_detail)
-    
         
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
