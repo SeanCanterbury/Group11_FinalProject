@@ -16,7 +16,6 @@ class OrderBase(BaseModel):
     exp_year: str = "00"
     sandwich_id: int
     amount: int
-    promo_code: str
 
 
 class TotalCost(BaseModel):
@@ -38,7 +37,6 @@ class OrderUpdate(BaseModel):
     exp_year: str = "00"
     sandwich_id: Optional[int] = None
     amount: Optional[int] = None
-    promo_code: Optional[str] = None
 
 
 
