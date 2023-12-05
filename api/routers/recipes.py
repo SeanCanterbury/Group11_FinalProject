@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.post("/", response_model=schema.Recipe)
-def create(request: schema.Recipe, db: Session = Depends(get_db)):
+def create(request: schema.RecipeCreate, db: Session = Depends(get_db)):
     return controller.create(db=db, request=request)
 
 
@@ -26,7 +26,7 @@ def read_one(item_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{item_id}", response_model=schema.Recipe)
-def update(item_id: int, request: schema.Recipe, db: Session = Depends(get_db)):
+def update(item_id: int, request: schema.RecipeUpdate, db: Session = Depends(get_db)):
     return controller.update(db=db, request=request, item_id=item_id)
 
 
