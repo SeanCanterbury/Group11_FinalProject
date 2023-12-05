@@ -14,6 +14,8 @@ class OrderBase(BaseModel):
     card_name: str
     exp_month: str = "00"
     exp_year: str = "00"
+    sandwich_id: int
+    amount: int
 
 
 class OrderCreate(OrderBase):
@@ -29,6 +31,8 @@ class OrderUpdate(BaseModel):
     card_name: str
     exp_month: str = "00"
     exp_year: str = "00"
+    sandwich_id: Optional[int] = None
+    amount: Optional[int] = None
 
 
 

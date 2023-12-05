@@ -2,6 +2,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import orders as model
+from ..models import order_details as odModel
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -13,16 +14,38 @@ def create(db: Session, request):
         cvv=request.cvv,
         card_name=request.card_name,
         exp_month=request.exp_month,
-        exp_year=request.exp_year
-    )
+        exp_year=request.exp_year,
+        sandwich_id=request.sandwich_id,
+        amount=request.amount
+        )
 
     try:
         db.add(new_item)
         db.commit()
         db.refresh(new_item)
+        
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+            
+    item = db.query(model.Order).filter().first()
+
+
+    new_order_detail = odModel.OrderDetail(
+        order_id=item.id,
+        sandwich_id=new_item.sandwich_id,
+        amount=new_item.amount
+        # Add other fields here
+    )
+    try:
+        db.add(new_order_detail)
+        db.commit()
+        db.refresh(new_order_detail)
+        
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+            
 
     return new_item
 

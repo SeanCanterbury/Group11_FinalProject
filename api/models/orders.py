@@ -17,6 +17,8 @@ class Order(Base):
     card_name = Column(String(300), nullable=False)
     exp_month = Column(String(2), nullable=False)
     exp_year = Column(String(2), nullable=False)
+    sandwich_id = Column(Integer, nullable=False)
+    amount = Column(Integer, index=True, nullable=False)
 
 
     order_details = relationship("OrderDetail", back_populates="order")
