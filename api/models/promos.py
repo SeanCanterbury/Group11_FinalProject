@@ -10,9 +10,6 @@ class Promo(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     promo_code = Column(String(20), unique=True, nullable=True)
     discount = Column(DECIMAL(4, 2), nullable=False, server_default='0.0')
-<<<<<<< HEAD
-    #expiration_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
-=======
->>>>>>> parent of aa20541 (Promos functionality)
+    expiration_date = Column(DATETIME, nullable=False, default=datetime.utcnow)
 
 
