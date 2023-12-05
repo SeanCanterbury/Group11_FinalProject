@@ -12,6 +12,7 @@ class Rating(Base):
     CheckConstraint('1<=rating AND rating<=10', name='rating_range')
     customer_name = Column(String(100))
     rating_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
+    order_id = Column(Integer, ForeignKey('orders.id'))
     description = Column(String(300))
     
 

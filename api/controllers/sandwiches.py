@@ -9,22 +9,22 @@ from sqlalchemy.exc import SQLAlchemyError
 
 def create(db: Session, request):
     resource = db.query(resModel.Resource).filter(resModel.Resource.id == request.resource_id).first()
-    
+
     if not resource:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Resource not found")
-
-    resource.amount -= 1
-
-    if resource.amount < 0:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough resources")
 
     new_item = model.Sandwich(
         sandwich_name=request.sandwich_name,
         price=request.price,
         calories=request.calories,
+        amount=request.amount,
         resource_id=request.resource_id
-
     )
+
+    resource.amount -= new_item.amount
+
+    if resource.amount < 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough resources")
 
     try:
         db.add(new_item)

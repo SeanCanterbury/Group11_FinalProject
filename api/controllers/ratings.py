@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import ratings as model
+from ..models import orders as orderModel
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -8,8 +9,14 @@ def create(db: Session, request):
     new_item = model.Rating(
         rating=request.rating,
         description=request.description,
-        customer_name=request.customer_name
+        customer_name=request.customer_name,
+        order_id=request.order_id
     )
+    order_object = db.query(orderModel.Order).filter(orderModel.Order.id == new_item.order_id).first()
+    if not order_object:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order Id not found!")
+    
+
     #setting rating values lower than 1 and higher than 10 to 1 or 10 respectivley to keep ratings within 1-10 range
     if new_item.rating < 1:
         new_item.rating = 1

@@ -9,6 +9,7 @@ class RatingBase(BaseModel):
     customer_name: str
     rating: int
     description: Optional[str] = None
+    order_id: int
     
 
 
@@ -29,7 +30,7 @@ class RatingUpdate(BaseModel):
 class Rating(RatingBase):
     id: int
     rating_date: Optional[datetime] = None
-    #order: list[OrderBase] = None
+    order_id: int
 
     class ConfigDict:
         from_attributes = True

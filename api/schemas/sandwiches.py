@@ -7,6 +7,7 @@ class SandwichBase(BaseModel):
     sandwich_name: str
     price: float
     calories: int
+    amount: int
     resource_id: int
 
 
@@ -18,6 +19,7 @@ class SandwichUpdate(BaseModel):
     sandwich_name: Optional[str] = None
     price: Optional[float] = None
     calories: Optional[int] = None
+    amount: Optional[int] = None
     resource_id: Optional[int] = None
 
 

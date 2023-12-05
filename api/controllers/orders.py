@@ -38,10 +38,20 @@ def create(db: Session, request):
         total_price = new_item.amount * (db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().price)
         # Add other fields here
     )
+
+    numSandwiches = db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().amount
+    
+    if (numSandwiches - new_order_detail.amount) < 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough sandwiches")
+    
+    sandwich = db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first()
+    sandwich.amount -= new_order_detail.amount
+    db.commit()
     try:
         db.add(new_order_detail)
         db.commit()
         db.refresh(new_order_detail)
+    
         
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
