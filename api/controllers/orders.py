@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import orders as model
 from ..models import order_details as odModel
+from ..models import sandwiches as sandModel
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -30,11 +31,11 @@ def create(db: Session, request):
             
     item = db.query(model.Order).filter().first()
 
-
     new_order_detail = odModel.OrderDetail(
         order_id=item.id,
         sandwich_id=new_item.sandwich_id,
-        amount=new_item.amount
+        amount=new_item.amount,
+        total_price = new_item.amount * (db.query(sandModel.Sandwich).filter(sandModel.Sandwich.id == new_item.sandwich_id).first().price)
         # Add other fields here
     )
     try:
