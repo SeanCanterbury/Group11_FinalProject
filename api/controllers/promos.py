@@ -5,9 +5,9 @@ from sqlalchemy.exc import SQLAlchemyError
 
 def create(db: Session, request):
     new_item = model.Promo(
-        promo_code = request.promo_code,
-        discount = request.discount,
-        expiration_date = request.expiration_date
+        promo_code=request.promo_code,
+        discount=request.discount,
+        #expiration_date=request.expiration_date
     )
 
     try:
@@ -15,7 +15,7 @@ def create(db: Session, request):
         db.commit()
         db.refresh(new_item)
     except SQLAlchemyError as e:
-        error = str(e. __dict__['orig])'])
+        error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return new_item
 
